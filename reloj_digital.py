@@ -1,43 +1,68 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from tkinter import *
 from tkinter import ttk
 import time
 from datetime import datetime
 import pytz
 
-class WordClock:
-        def __init__(self):
-                self.root = Tk()
-                self.root.geometry("500x250")
-                self.clock = Label(self.root,font=("times",50,"bold"))
-                self.clock.grid(row=2,column=1,pady=65,padx=110)
-                self.locations = {"Amsterdam":"Europe/Amsterdam","Caracas":"America/Caracas",
-                                  "Dublin":"Europe/Dublin","London":"Europe/London","New York":"America/New_York","Moscow":"Europe/Moscow","Tokyo":"Asia/Tokyo"}
-                self.location_label = Label(self.root,text="Local Time",width=26,font="arial 24 bold",fg="green")
-                self.location_label.place(x=0,y=20)
-                self.entry = ttk.Combobox(self.root,width=42)
-                self.entry["values"]=["Local Time","Amsterdam","Caracas","Dublin","London",
-                                     "New York","Moscow","Tokyo"]
-                self.entry.set("Local Time")
-                self.entry.place(x=110,y=175)
+class RelojClass:
+    def __init__(self):
+        # Crear la ventana principal
+        self.ventana = Tk()
+        # Establecer el tamaño de la ventana
+        self.ventana.geometry("500x250")
+        
+        # Crear un widget de etiqueta para mostrar la hora
+        self.reloj = Label(self.ventana, font=("times", 50, "bold"))
+        # Colocar la etiqueta en la ventana utilizando un grid
+        self.reloj.grid(row=2, column=1, pady=65, padx=110)
+        
+        # Diccionario que asocia nombres de ciudades con sus zonas horarias
+        self.localizaciones = {"Ámsterdam": "Europe/Amsterdam", "Caracas": "America/Caracas",
+        "Dublín": "Europe/Dublin", "Londres": "Europe/London", "Nueva York": "America/New_York", "Moscú": "Europe/Moscow", "Tokio": "Asia/Tokyo"}
+        
+        # Crear una etiqueta para mostrar el texto de la localización
+        self.etiqueta_localizacion = Label(self.ventana, text="Hora Local", width=26, font="arial 24 bold", fg="green")
+        # Colocar la etiqueta en la ventana
+        self.etiqueta_localizacion.place(x=0, y=20)
+        
+        # Crear un combobox para seleccionar la ciudad
+        self.entrada = ttk.Combobox(self.ventana, width=42)
+        # Definir los valores del combobox
+        self.entrada["values"] = ["Hora Local", "Ámsterdam", "Caracas", "Dublín", "Londres",
+        "Nueva York", "Moscú", "Tokio"]
+        # Establecer el valor inicial del combobox
+        self.entrada.set("Hora Local")
+        # Colocar el combobox en la ventana
+        self.entrada.place(x=110, y=175)
 
-                self.times()
+        # Llamar al método para mostrar la hora
+        self.mostrar_hora()
 
-                self.root.mainloop()
+        # Ejecutar el bucle principal de la ventana
+        self.ventana.mainloop()
 
-        def times(self):
-                if self.entry.get()!="Local Time":
-                        tz = pytz.timezone(self.locations[self.entry.get()])
-                        zone_time = datetime.now(tz)
-                        current_time = zone_time.strftime("%H:%M:%S")
-                        self.location_label.configure(text='{} Time'.format(self.entry.get()))
-                else:
-                        current_time=time.strftime("%H:%M:%S")
-                        self.location_label.configure(text=self.entry.get())
-                self.clock.config(text=current_time,bg="black",fg="green",font="Arial 50 bold")
-                self.clock.after(200,self.times)
+    def mostrar_hora(self):
+        # Verificar si se ha seleccionado una ciudad distinta a "Hora Local"
+        if self.entrada.get() != "Hora Local":
+            # Obtener la zona horaria de la ciudad seleccionada
+            zona_tiempo = pytz.timezone(self.localizaciones[self.entrada.get()])
+            # Obtener la hora actual en la zona horaria seleccionada
+            hora_zona = datetime.now(zona_tiempo)
+            # Formatear la hora como una cadena
+            hora_actual = hora_zona.strftime("%H:%M:%S")
+            # Actualizar el texto de la etiqueta de localización para mostrar la ciudad seleccionada
+            self.etiqueta_localizacion.configure(text='Hora en {}'.format(self.entrada.get()))
+        else:
+            # Obtener la hora local del sistema
+            hora_actual = time.strftime("%H:%M:%S")
+            # Actualizar el texto de la etiqueta de localización para mostrar "Hora Local"
+            self.etiqueta_localizacion.configure(text=self.entrada.get())
+        
+        # Actualizar el texto de la etiqueta del reloj con la hora actual
+        self.reloj.config(text=hora_actual, bg="black", fg="green", font="Arial 50 bold")
+        # Llamar al método mostrar_hora nuevamente después de 200 milisegundos
+        self.reloj.after(200, self.mostrar_hora)
 
-
-if __name__=="__main__":
-        WordClock()
+# Ejecutar la aplicación si este archivo es el principal
+if __name__ == "__main__":
+    RelojClass()
