@@ -17,8 +17,12 @@ class RelojClass:
         self.reloj.grid(row=2, column=1, pady=65, padx=110)
         
         # Diccionario que asocia nombres de ciudades con sus zonas horarias
-        self.localizaciones = {"Ámsterdam": "Europe/Amsterdam", "Caracas": "America/Caracas",
-        "Dublín": "Europe/Dublin", "Londres": "Europe/London", "Nueva York": "America/New_York", "Moscú": "Europe/Moscow", "Tokio": "Asia/Tokyo"}
+        self.localizaciones = { "Argentina":"America/Argentina/Buenos_Aires", "Brasil":"Etc/GMT+3", "Chile":"America/Santiago", "México":"America/Mexico_City", 
+                               "Paraguay":"America/Asuncion", "Perú":"America/Lima", "Uruguay":"America/Montevideo", "Venezuela":"America/Caracas", "Canadá":"Etc/GMT+4",
+                               "Estados Unidos":"Etc/GMT+4", "Alemania":"Europe/Berlin", "España":"Europe/Madrid", "Francia":"Europe/Paris","Italia":"Europe/Rome",
+                               "Países Bajos":"Europe/Amsterdam", "Reino Unido":"Europe/London", "Qatar":"Asia/Qatar", "China":"Etc/GMT-8", "Japón":"Asia/Tokyo", 
+                               "Rusia":"Europe/Moscow","Australia":"Australia/Canberra","Nueva Zelanda":"Etc/GMT-12"
+                               }
         
         # Crear una etiqueta para mostrar el texto de la localización
         self.etiqueta_localizacion = Label(self.ventana, text="Hora Local", width=26, font="arial 24 bold", fg="green")
@@ -28,8 +32,9 @@ class RelojClass:
         # Crear un combobox para seleccionar la ciudad
         self.entrada = ttk.Combobox(self.ventana, width=42)
         # Definir los valores del combobox
-        self.entrada["values"] = ["Hora Local", "Ámsterdam", "Caracas", "Dublín", "Londres",
-        "Nueva York", "Moscú", "Tokio"]
+        self.entrada["values"] = ["Hora Local","Argentina","Brasil","Chile","México","Paraguay","Perú","Uruguay","Venezuela","Canadá","Estados Unidos",
+                                  "Alemania","España","Francia","Italia","Países Bajos","Reino Unido","Qatar","China","Corea N", "Corea S", "Japón", "Rusia",
+                                  "Australia","Nueva Zelanda"]
         # Establecer el valor inicial del combobox
         self.entrada.set("Hora Local")
         # Colocar el combobox en la ventana
