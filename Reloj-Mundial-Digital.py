@@ -11,6 +11,11 @@ class RelojClass:
         # Establecer el tamaño de la ventana
         self.ventana.geometry("500x250")
         self.ventana.config(bg="white")
+        self.ventana.minsize(width=250, height=200)
+        self.ventana.columnconfigure(0, weight=15)
+        self.ventana.rowconfigure(0, weight=15)
+        self.ventana.columnconfigure([1,2], weight=1)
+        self.ventana.rowconfigure([1,2], weight=1
         
         # Crear un widget de etiqueta para mostrar la hora
         self.reloj = Label(self.ventana, font=("Lucida Sans", 50, "bold"))
